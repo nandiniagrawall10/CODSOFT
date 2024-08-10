@@ -1,0 +1,91 @@
+# List to store all contacts
+contacts = []
+
+def add_contact(name, phone, email, address):
+    contact = {
+        'name': name,
+        'phone': phone,
+        'email': email,
+        'address': address
+    }
+    contacts.append(contact)
+    print(f"Contact '{name}' added successfully!")
+
+def view_contacts():
+    if len(contacts) == 0:
+        print("No contacts found.")
+    else:
+        for i, contact in enumerate(contacts, start=1):
+            print(f"{i}. {contact['name']} - {contact['phone']}")
+
+def search_contact(search_term):
+    found = False
+    for contact in contacts:
+        if search_term.lower() in contact['name'].lower() or search_term in contact['phone']:
+            print(f"Name: {contact['name']}, Phone: {contact['phone']}, Email: {contact['email']}, Address: {contact['address']}")
+            found = True
+    if not found:
+        print("No contacts found with that search term.")
+
+def update_contact(index, new_name=None, new_phone=None, new_email=None, new_address=None):
+    if 0 <= index < len(contacts):
+        if new_name:
+            contacts[index]['name'] = new_name
+        if new_phone:
+            contacts[index]['phone'] = new_phone
+        if new_email:
+            contacts[index]['email'] = new_email
+        if new_address:
+            contacts[index]['address'] = new_address
+        print("Contact updated successfully!")
+    else:
+        print("Invalid contact number.")
+
+def delete_contact(index):
+    if index >= 0 and index < len(contacts):
+        removed_contact = contacts.pop(index)
+        print(f"Contact '{removed_contact['name']}' deleted successfully!")
+    else:
+        print("Invalid contact number.")
+
+def main():
+    while True:
+        print("\nContact Manager:")
+        print("1. Add Contact")
+        print("2. View Contacts")
+        print("3. Search Contact")
+        print("4. Update Contact")
+        print("5. Delete Contact")
+        print("6. Exit")
+
+        choice = input("Choose an option (1-6): ")
+
+        if choice == '1':
+            name = input("Enter name: ")
+            phone = input("Enter phone number: ")
+            email = input("Enter email: ")
+            address = input("Enter address: ")
+            add_contact(name, phone, email, address)
+        elif choice == '2':
+            view_contacts()
+        elif choice == '3':
+            search_term = input("Enter name or phone number to search: ")
+            search_contact(search_term)
+        elif choice == '4':
+            index = int(input("Enter the contact number to update: ")) - 1
+            new_name = input("Enter new name (or press Enter to skip): ")
+            new_phone = input("Enter new phone number (or press Enter to skip): ")
+            new_email = input("Enter new email (or press Enter to skip): ")
+            new_address = input("Enter new address (or press Enter to skip): ")
+            update_contact(index, new_name, new_phone, new_email, new_address)
+        elif choice == '5':
+            index = int(input("Enter the contact number to delete: ")) - 1
+            delete_contact(index)
+        elif choice == '6':
+            print("Exiting the program...")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
